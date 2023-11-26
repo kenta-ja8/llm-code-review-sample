@@ -1,0 +1,22 @@
+name: Review By Openai
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**'
+    branches:
+      - main
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Setup repository & Execute
+        run: |
+          cd .github/workflows/llm-code-review/
+          npm install
+          npm run start
