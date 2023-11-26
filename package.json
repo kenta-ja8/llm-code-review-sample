@@ -1,0 +1,10 @@
+{
+  "name": "llm-code-review-sample",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "zx ./script.mjs"
+  },
+  "dependencies": {
+    "zx": "^7.2.3"
+  }
+}
