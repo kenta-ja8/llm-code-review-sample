@@ -1,4 +1,4 @@
-name: Review By Openai
+name: Review By LLM
 
 on:
   pull_request:
@@ -9,14 +9,22 @@ on:
       - main
 
 jobs:
-  chromatic-deployment:
+  review-code:
     runs-on: ubuntu-latest
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
-      - name: Setup repository & Execute
+        with:
+          fetch-depth: 0 
+      - name: Setup repository
         run: |
-          cd .github/workflows/llm-code-review/
           npm install
+      - name: Run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
           npm run start
